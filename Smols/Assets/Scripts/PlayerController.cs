@@ -13,9 +13,19 @@ public class PlayerController : MonoBehaviour {
 
     private void Start() {
         motor = GetComponent<PlayerMotor>();
+        Cursor.lockState = CursorLockMode.Locked;
+
     }
 
     private void Update() {
+        //unlock--lock Cursor
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            if (Cursor.lockState == CursorLockMode.None)
+                Cursor.lockState = CursorLockMode.Locked;
+            else if (Cursor.lockState == CursorLockMode.Locked)
+                Cursor.lockState = CursorLockMode.None;
+        }
+
         //calculate movement velocity as a 3D Vector
         float _xMov = Input.GetAxisRaw("Horizontal");
         float _zMov = Input.GetAxisRaw("Vertical");
