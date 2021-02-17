@@ -377,7 +377,7 @@ MonoBehaviour:
   offlineScene: 
   onlineScene: 
   transport: {fileID: 969515437}
-  networkAddress: 79.156.26.150
+  networkAddress: 83.37.3.227
   maxConnections: 100
   disconnectInactiveConnections: 0
   disconnectInactiveTimeout: 60
@@ -602,6 +602,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f9a6f1b1eb30014ca04b68651744985, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  matchSettings:
+    respawnTime: 3
 --- !u!4 &1722533360
 Transform:
   m_ObjectHideFlags: 0

@@ -5,6 +5,22 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
+    public static GameManager instance;
+    public Camera mainCamera;
+
+    public MatchSettings matchSettings;
+
+    private void Awake() {
+        if(instance != null) {
+            Debug.LogError("GameManager is a singleton, can't be instantiated more than 1 times");
+        } else 
+            instance = this;
+
+        mainCamera = Camera.main;
+    }
+
+    #region Player Tracking
+
     private const string PLAYER_ID_PREFIX = "Player";
 
     private static Dictionary<string, PlayerManager> players = new Dictionary<string, PlayerManager>();
@@ -34,4 +50,5 @@ public class GameManager : MonoBehaviour {
     //    GUILayout.EndVertical();
     //    GUILayout.EndArea();
     //}
+    #endregion
 }

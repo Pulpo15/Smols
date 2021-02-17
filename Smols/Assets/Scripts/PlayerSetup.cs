@@ -8,18 +8,15 @@ public class PlayerSetup : NetworkBehaviour {
     [SerializeField]
     private string remoteLayerName = "RemotePlayer";
 
-    private Camera sceneCamera;
-
     private void Start() {
         if (!isLocalPlayer) {
             DisableComponents();
             AssignRemoteLayer();
         } else {
-            sceneCamera = Camera.main;
-            if (sceneCamera != null) {
-                sceneCamera.gameObject.SetActive(false);
-            }
+            if (GameManager.instance.mainCamera != null)
+                GameManager.instance.mainCamera.gameObject.SetActive(false);
         }
+        GetComponent<PlayerManager>().Setup();
     }
 
     public override void OnStartClient() {
@@ -43,9 +40,8 @@ public class PlayerSetup : NetworkBehaviour {
     }
 
     private void OnDisable() {
-        if (sceneCamera != null) {
-            sceneCamera.gameObject.SetActive(true);
-        }
+        if (GameManager.instance.mainCamera != null)
+            GameManager.instance.mainCamera.gameObject.SetActive(true);
         GameManager.UnRegisterPlayer(transform.name);
     }
 }
