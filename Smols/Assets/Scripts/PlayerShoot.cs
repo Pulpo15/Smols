@@ -66,10 +66,13 @@ public class PlayerShoot : NetworkBehaviour {
         //Debug.Log(_playerId + " has been shot.");
         GameObject go = Instantiate(arrowPrefab, arrowSpawn.position, Quaternion.identity);
         Rigidbody rb = go.GetComponent<Rigidbody>();
-        
+
+        NetworkServer.Spawn(go);
+
         rb.velocity = cam.transform.forward * _range;
         go.GetComponent<Arrow>().SetDamage(weapon.damage);
 
         weapon.curRange = weapon.initRange;
     }
+
 }
