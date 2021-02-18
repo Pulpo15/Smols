@@ -4,7 +4,7 @@ using UnityEngine;
 using Mirror;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Arrow : NetworkBehaviour {  
+public class Arrow : NetworkBehaviour, IPooledObject {  
     private Rigidbody rb;
     private float lifeTime = 2f;
     private float totalLifeTime = 10f;
@@ -17,7 +17,7 @@ public class Arrow : NetworkBehaviour {
         damage = _damage;
     }
 
-    private void Start() {
+    public void OnObjectSpawn() {
         rb = GetComponent<Rigidbody>();
         if (rb.velocity != Vector3.zero)
             transform.rotation = Quaternion.LookRotation(rb.velocity);
@@ -25,11 +25,13 @@ public class Arrow : NetworkBehaviour {
     }
 
     private void Update() {
+        if (rb == null)
+            rb = GetComponent<Rigidbody>();
         if (!hitSomething && rb.velocity != Vector3.zero) {
             transform.rotation = Quaternion.LookRotation(rb.velocity);
         }
     }
-
+    
     private void OnCollisionEnter(Collision collision) {
         if (collision.collider.tag != "Arrow") {
             hitSomething = true;
@@ -54,7 +56,9 @@ public class Arrow : NetworkBehaviour {
 
     private IEnumerator ArrowTimeOut(float _time) {
         yield return new WaitForSeconds(_time);
-        Destroy(gameObject);
+        rb.constraints = RigidbodyConstraints.None;
+        hitSomething = false;
+        gameObject.SetActive(false);
     }
 
     [Command]

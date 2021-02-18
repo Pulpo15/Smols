@@ -3,6 +3,7 @@ ScriptsOnlyBuild:
     Assembly-CSharp.dll:
     - Arrow
     - GameManager
+    - ObjectPooler
     - PlayerController
     - PlayerManager
     - PlayerMotor
@@ -11,8 +12,6 @@ ScriptsOnlyBuild:
     Mirror.Components.dll:
     - Mirror.NetworkTransform
     - Mirror.NetworkTransformChild
-    Mirror.Editor.dll:
-    - Mirror.NetworkBehaviourInspector
     Mirror.dll:
     - Mirror.NetworkIdentity
     - Mirror.NetworkManager
@@ -103,6 +102,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 3792}
     - Class: 114
       Script: {instanceID: 4126}
+    - Class: 114
+      Script: {instanceID: 16410}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 135
@@ -1106,6 +1107,12 @@ ScriptsOnlyBuild:
     assemblyName: Mirror.dll
     namespaceName: Mirror
     className: NetworkManager
+  - hash:
+      serializedVersion: 2
+      Hash: 030773771e7860d51b2e0cc26413c80b
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ObjectPooler
   platform: 5
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
