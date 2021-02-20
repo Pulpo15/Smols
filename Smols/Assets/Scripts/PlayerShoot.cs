@@ -18,21 +18,16 @@ public class PlayerShoot : NetworkBehaviour {
     [SerializeField]
     private Transform arrowSpawn;
 
-    private ObjectPooler objectPooler;
     private GameObject graphicsArrow;
     private bool canShoot = true;
-    private string id;
 
     private void Start() {
         if (cam == null) {
             Debug.LogError("PlayerShoot: No camera referenced");
             this.enabled = false;
         }
-        objectPooler = ObjectPooler.instance;
         weapon.curRange = weapon.initRange;
         graphicsArrow = Instantiate(graphicsArrowPrefab, arrowSpawn.position, Quaternion.identity);
-        id = GetComponent<NetworkIdentity>().netId.ToString();
-        Debug.Log(id);
         graphicsArrow.SetActive(false);
     }
 
@@ -69,12 +64,10 @@ public class PlayerShoot : NetworkBehaviour {
     [Command]
     private void CmdPlayerShot(float _range) {
         //Debug.Log(_playerId + " has been shot.");
-        if (objectPooler == null)
-            objectPooler = ObjectPooler.instance;
-        GameObject go = objectPooler.SpawnFromPool(id + "Arrow", arrowSpawn.position, arrowSpawn.rotation);
+        GameObject go = Instantiate(arrowPrefab, arrowSpawn.position, Quaternion.identity);
         Rigidbody rb = go.GetComponent<Rigidbody>();
 
-        //NetworkServer.Spawn(go);
+        NetworkServer.Spawn(go);
 
         rb.velocity = cam.transform.forward * _range;
         go.GetComponent<Arrow>().SetDamage(weapon.damage);
