@@ -602,6 +602,7 @@ MonoBehaviour:
   weapon:
     name: Arrow
     damage: 10
+    reloadTime: 5
     maxRange: 20
     initRange: 10
     addRange: 5

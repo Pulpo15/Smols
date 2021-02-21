@@ -5,7 +5,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637490774367594386
+      ticks: 637492889480000000
     m_Hash: 1019725360
   m_LockFileStatus:
     m_FilePath: G:/Smols/Smols/Packages/packages-lock.json
@@ -13,7 +13,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637490774448061913
+      ticks: 637494450252717325
     m_Hash: 3829494466
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}

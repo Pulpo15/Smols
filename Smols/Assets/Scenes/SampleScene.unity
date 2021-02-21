@@ -800,12 +800,15 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   pools:
-  - tag: 1Arrow
-    prefab: {fileID: 2125908107144355476, guid: 5034284a86e405449b2f3d920756533d, type: 3}
-    size: 10
   - tag: 2Arrow
     prefab: {fileID: 2125908107144355476, guid: 5034284a86e405449b2f3d920756533d, type: 3}
-    size: 10
+    size: 2
+  - tag: 3Arrow
+    prefab: {fileID: 2125908107144355476, guid: 5034284a86e405449b2f3d920756533d, type: 3}
+    size: 2
+  - tag: 4Arrow
+    prefab: {fileID: 2125908107144355476, guid: 5034284a86e405449b2f3d920756533d, type: 3}
+    size: 2
 --- !u!114 &1722533362
 MonoBehaviour:
   m_ObjectHideFlags: 0

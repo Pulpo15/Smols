@@ -24,7 +24,15 @@ public class ObjectPooler : NetworkBehaviour {
     private List<GameObject> parents;
     private const string PARENT_NAME = "Parent";
 
+    //handles requests to spawn GameObjects on the client
+    public delegate GameObject SpawnDelegate(Vector3 _position, System.Guid _assetId);
+
+    //handles requests to unspawn GameObjects on the client
+    public delegate void UnSpawnGameObject(GameObject _spawned);
+
     private void Start() {
+        if (isClientOnly)
+            return;
         poolDictionary = new Dictionary<string, Queue<GameObject>>();
         parents = new List<GameObject>();
 
@@ -50,8 +58,6 @@ public class ObjectPooler : NetworkBehaviour {
         
         GameObject objToSpawn = poolDictionary[_tag].Dequeue();
 
-        NetworkServer.Spawn(objToSpawn);
-
         objToSpawn.SetActive(true);
         objToSpawn.transform.position = _position;
         objToSpawn.transform.rotation = _rotation;
@@ -64,5 +70,13 @@ public class ObjectPooler : NetworkBehaviour {
         poolDictionary[_tag].Enqueue(objToSpawn);
 
         return objToSpawn;
+    }
+
+    public GameObject SpawnObject(Vector3 _position, System.Guid _id) {
+        return SpawnFromPool("2Arrow", _position, Quaternion.identity);
+    }
+
+    public void UnSpawnObject(GameObject _objToUnSpawn) {
+        _objToUnSpawn.SetActive(false);
     }
 }

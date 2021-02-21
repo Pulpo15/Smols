@@ -69,41 +69,41 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1434}
     - Class: 114
-      Script: {instanceID: 1450}
+      Script: {instanceID: 1454}
     - Class: 114
-      Script: {instanceID: 1558}
+      Script: {instanceID: 1562}
     - Class: 114
-      Script: {instanceID: 1618}
+      Script: {instanceID: 1622}
     - Class: 114
-      Script: {instanceID: 2312}
+      Script: {instanceID: 1626}
     - Class: 114
-      Script: {instanceID: 2762}
+      Script: {instanceID: 2318}
     - Class: 114
-      Script: {instanceID: 2896}
+      Script: {instanceID: 2768}
     - Class: 114
-      Script: {instanceID: 2900}
+      Script: {instanceID: 2902}
     - Class: 114
-      Script: {instanceID: 3104}
+      Script: {instanceID: 2906}
     - Class: 114
-      Script: {instanceID: 3116}
+      Script: {instanceID: 3110}
     - Class: 114
-      Script: {instanceID: 3224}
+      Script: {instanceID: 3122}
     - Class: 114
-      Script: {instanceID: 3284}
+      Script: {instanceID: 3230}
     - Class: 114
-      Script: {instanceID: 3340}
+      Script: {instanceID: 3290}
     - Class: 114
-      Script: {instanceID: 3352}
+      Script: {instanceID: 3348}
     - Class: 114
-      Script: {instanceID: 3534}
+      Script: {instanceID: 3360}
     - Class: 114
       Script: {instanceID: 3542}
     - Class: 114
-      Script: {instanceID: 3792}
+      Script: {instanceID: 3550}
     - Class: 114
-      Script: {instanceID: 4126}
+      Script: {instanceID: 3800}
     - Class: 114
-      Script: {instanceID: 16410}
+      Script: {instanceID: 4134}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 135
@@ -213,6 +213,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerSetup
+  - hash:
+      serializedVersion: 2
+      Hash: 030773771e7860d51b2e0cc26413c80b
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ObjectPooler
   - hash:
       serializedVersion: 2
       Hash: 681b5f9be6f57e5a7b20908e503986d3
@@ -1107,12 +1113,6 @@ ScriptsOnlyBuild:
     assemblyName: Mirror.dll
     namespaceName: Mirror
     className: NetworkManager
-  - hash:
-      serializedVersion: 2
-      Hash: 030773771e7860d51b2e0cc26413c80b
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: ObjectPooler
   platform: 5
   scenePathNames:
   - Assets/Scenes/SampleScene.unity

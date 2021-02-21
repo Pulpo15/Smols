@@ -21,7 +21,6 @@ public class PlayerShoot : NetworkBehaviour {
     private ObjectPooler objectPooler;
     private GameObject graphicsArrow;
     private bool canShoot = true;
-    private string id;
 
     private void Start() {
         if (cam == null) {
@@ -31,8 +30,6 @@ public class PlayerShoot : NetworkBehaviour {
         objectPooler = ObjectPooler.instance;
         weapon.curRange = weapon.initRange;
         graphicsArrow = Instantiate(graphicsArrowPrefab, arrowSpawn.position, Quaternion.identity);
-        id = GetComponent<NetworkIdentity>().netId.ToString();
-        Debug.Log(id);
         graphicsArrow.SetActive(false);
     }
 
@@ -69,17 +66,33 @@ public class PlayerShoot : NetworkBehaviour {
     [Command]
     private void CmdPlayerShot(float _range) {
         //Debug.Log(_playerId + " has been shot.");
+        //Debug.Log(GetComponent<NetworkIdentity>().netId.ToString());
         if (objectPooler == null)
             objectPooler = ObjectPooler.instance;
-        GameObject go = objectPooler.SpawnFromPool(id + "Arrow", arrowSpawn.position, arrowSpawn.rotation);
+
+        GameObject go = objectPooler.SpawnFromPool(GetComponent<NetworkIdentity>().netId.ToString() + "Arrow", arrowSpawn.position, arrowSpawn.rotation);
         Rigidbody rb = go.GetComponent<Rigidbody>();
 
-        //NetworkServer.Spawn(go);
+        NetworkServer.Spawn(go, go.GetComponent<NetworkIdentity>().assetId);
 
         rb.velocity = cam.transform.forward * _range;
         go.GetComponent<Arrow>().SetDamage(weapon.damage);
 
+
         weapon.curRange = weapon.initRange;
+        StartCoroutine(Destroy(go, weapon.reloadTime));
     }
 
+    [Command]
+    public void CmdHitShot(string _playerId, int _damage) {
+        PlayerManager _player = GameManager.GetPlayer(_playerId);
+        _player.RpcTakeDamage(_damage);
+    }
+
+    public IEnumerator Destroy(GameObject _go, float _time) {
+        yield return new WaitForSeconds(_time);
+        _go.GetComponent<Arrow>().SetUp();
+        ObjectPooler.instance.UnSpawnObject(_go);
+        NetworkServer.UnSpawn(_go);
+    }
 }
