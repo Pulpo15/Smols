@@ -7,6 +7,8 @@ public class PlayerShoot : NetworkBehaviour {
 
     public PlayerWeapon weapon;
 
+    public static PlayerShoot instance;
+
     [SerializeField]
     private Camera cam;
     [SerializeField]
@@ -21,6 +23,13 @@ public class PlayerShoot : NetworkBehaviour {
     private ObjectPooler objectPooler;
     private GameObject graphicsArrow;
     private bool canShoot = true;
+
+    private void Awake() {
+        //if (!isLocalPlayer) {
+        //    instance = this;
+        //    Debug.Log(this);
+        //}
+    }
 
     private void Start() {
         if (cam == null) {
@@ -74,10 +83,10 @@ public class PlayerShoot : NetworkBehaviour {
         Rigidbody rb = go.GetComponent<Rigidbody>();
 
         NetworkServer.Spawn(go, go.GetComponent<NetworkIdentity>().assetId);
+        go.GetComponent<Arrow>().SetAuthority(gameObject.GetComponent<NetworkIdentity>());
 
         rb.velocity = cam.transform.forward * _range;
         go.GetComponent<Arrow>().SetDamage(weapon.damage);
-
 
         weapon.curRange = weapon.initRange;
         StartCoroutine(Destroy(go, weapon.reloadTime));

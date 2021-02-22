@@ -5,19 +5,47 @@ using Mirror;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Arrow : NetworkBehaviour, IPooledObject {
-    private PlayerShoot playerShoot;
+    public Collider Collision;
+    public Collider Trigger;
+
     private Rigidbody rb;
     private bool hitSomething = false;
     private int damage;
 
     private const string PLAYER_TAG = "Player";
 
+    private NetworkIdentity legacyId;
+    private NetworkIdentity id;
+
     public void SetDamage(int _damage) {
         damage = _damage;
     }
 
+    public void SetUp() {
+        rb.constraints = RigidbodyConstraints.None;
+        hitSomething = false;
+        Collision.enabled = true;
+        Trigger.enabled = true;
+        SetLegacyAuthority();
+    }
+
+    public void SetAuthority(NetworkIdentity _id) {
+        Debug.Log(_id);
+        id.AssignClientAuthority(_id.connectionToClient);
+    }
+
+    private void SetPlayerAuthority() {
+        GetComponent<NetworkIdentity>().AssignClientAuthority(id.connectionToClient);
+    }
+
+    private void SetLegacyAuthority() {
+        GetComponent<NetworkIdentity>().AssignClientAuthority(legacyId.connectionToClient);
+    }
+
     private void Start() {
-        playerShoot = FindObjectOfType<PlayerShoot>();
+        legacyId = new NetworkIdentity();
+        id = new NetworkIdentity();
+        legacyId.AssignClientAuthority(GetComponent<NetworkIdentity>().connectionToServer);
     }
 
     public void OnObjectSpawn() {
@@ -38,15 +66,21 @@ public class Arrow : NetworkBehaviour, IPooledObject {
         if (collision.collider.tag != "Arrow") {
             hitSomething = true;
             Stick();
+            Collision.enabled = false;
+            Trigger.enabled = false;
         }
     }
 
-    private void OnTriggerEnter(Collider collision) {
+    public void OnTriggerEnter(Collider collision) {
         if (collision.tag != "Arrow") {
             hitSomething = true;
             Stick();
-            if (collision.tag == PLAYER_TAG)
+            Collision.enabled = false;
+            Trigger.enabled = false;
+            if (collision.tag == PLAYER_TAG) {
+                SetPlayerAuthority();
                 PlayerShot(collision.gameObject.name, damage);
+            }
         }
     }
 
@@ -54,12 +88,10 @@ public class Arrow : NetworkBehaviour, IPooledObject {
         rb.constraints = RigidbodyConstraints.FreezeAll;
     }
 
-    public void SetUp() {
-        rb.constraints = RigidbodyConstraints.None;
-        hitSomething = false;
-    }
-
+    [Client]
     private void PlayerShot(string _playerId, int _damage) {
-        //playerShoot.CmdHitShot(_playerId, _damage);
+        PlayerManager _player = GameManager.GetPlayer(_playerId);
+        _player.RpcTakeDamage(_damage);
+        //PlayerShoot.instance.CmdHitShot(_playerId, _damage);
     }
 }

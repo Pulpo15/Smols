@@ -95,6 +95,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  Collision: {fileID: 1023903878151916145}
+  Trigger: {fileID: 5564288979469547157}
 --- !u!114 &613984889890214245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,7 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
-  syncInterval: 0.01
+  syncInterval: 0.1
   clientAuthority: 1
   localPositionSensitivity: 0.01
   localRotationSensitivity: 0.01
